@@ -1,0 +1,6 @@
+# Check whether nfs was explicitly used across the mount list.
+mount__nfs_explicit: "{{ (mount_list | selectattr('fstype', 'defined') | selectattr('fstype', 'match', 'nfs\\d?') | list | count) > 0 }}"
+# Check whether nfs was used as default.
+mount__nfs_implicit: "{{ ((mount_list | rejectattr('fstype', 'defined') | list | count) > 0) and (mount_default_fstype == 'nfs') }}"
+# Any of above
+mount__nfs_used: "{{ mount__nfs_explicit or mount__nfs_implicit }}"

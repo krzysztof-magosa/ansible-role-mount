@@ -1,0 +1,25 @@
+- hosts: all
+  pre_tasks:
+    - name: Install ext4 utilities
+      yum:
+        name: e4fsprogs
+      when: ansible_facts.os_family == "RedHat"
+    - name: Create file and format it as ext4
+      shell: dd if=/dev/zero of=/test.bin bs=1M count=32 && mkfs.ext4 -F test.bin
+      args:
+        creates: /test.bin
+  roles:
+    - role: "{{ lookup('env', 'MOLECULE_PROJECT_DIRECTORY') | basename }}"
+      mount_list:
+        - src: /test.bin
+          path: /mnt
+          when: "{{ ansible_facts.os_family == 'RedHat' }}"
+        - src: /test.bin
+          path: /mnt
+          when: "{{ ansible_facts.os_family == 'Debian' }}"
+        - src: 1.2.3.4:/vol
+          path: /nfs
+          fstype: nfs4
+          state: present
+      mount_default_fstype: ext4
+      mount_default_state: mounted

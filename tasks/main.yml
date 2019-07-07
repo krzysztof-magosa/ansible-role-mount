@@ -1,0 +1,17 @@
+- import_tasks: variables.yml
+  tags:
+    - mount
+    - mount_variables
+    - mount_install
+    - mount_config
+    - mount_service
+
+- import_tasks: install.yml
+  tags:
+    - mount
+    - mount_install
+
+- import_tasks: config.yml
+  tags:
+    - mount
+    - mount_config

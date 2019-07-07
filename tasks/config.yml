@@ -1,0 +1,14 @@
+- name: Configure mount
+  mount:
+    backup: "{{ item.backup | default(mount_default_backup) }}"
+    boot: "{{ item.boot | default(mount_default_boot) }}"
+    dump: "{{ item.dump | default(mount_default_dump) }}"
+    fstab: "{{ item.fstab | default(mount_default_fstab) }}"
+    fstype: "{{ item.fstype | default(mount_default_fstype) }}"
+    opts: "{{ item.opts | default(mount_default_opts) }}"
+    passno: "{{ item.passno | default(mount_default_passno) }}"
+    path: "{{ item.path | default(mount_default_path) }}"
+    src: "{{ item.src | default(mount_default_src) }}"
+    state: "{{ item.state | default(mount_default_state) }}"
+  when: "item.when | default(mount_default_when)"
+  loop: "{{ mount_list }}"

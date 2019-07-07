@@ -1,0 +1,4 @@
+- name: Install NFS tools
+  package:
+    name: "{{ mount_nfs_packages }}"
+  when: "mount_install_nfs_tools | bool"

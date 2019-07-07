@@ -1,0 +1,33 @@
+# List of mounts to be configured.
+# Parameters are directly passed to mount module in Ansible.
+# You can use mount_default_* to avoid duplication of option used across all mounts.
+# See https://docs.ansible.com/ansible/latest/modules/mount_module.html for more details.
+mount_list: []
+#   - backup: true
+#     boot: true
+#     dump: 0
+#     fstab: /etc/fstab
+#     fstype: ext4
+#     opts: ""
+#     passno: 0
+#     path: /mount_point
+#     src: /dev/sda1
+#     state: mounted
+#     when: "{{ server_type == 'nas' }}"
+
+# Defaults to be used when some option is unspecified on list.
+mount_default_backup: "{{ omit }}"
+mount_default_boot: "{{ omit }}"
+mount_default_dump: "{{ omit }}"
+mount_default_fstab: "{{ omit }}"
+mount_default_fstype: "{{ omit }}"
+mount_default_opts: "{{ omit }}"
+mount_default_passno: "{{ omit }}"
+mount_default_src: "{{ omit }}"
+mount_default_state: "{{ omit }}"
+mount_default_when: true
+
+# Decide whether NFS tools should be installed.
+# By default it's done only when at least 1 NFS filesystem
+# is being managed by role.
+mount_install_nfs_tools: "{{ mount__nfs_used }}"
